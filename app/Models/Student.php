@@ -48,4 +48,9 @@ class Student extends Model
     {
         return $this->hasOne(Section::class, 'id', 'section_id');
     }
+
+    public function admissions()
+    {
+        return $this->hasMany(Admission::class, 'candidate_id', 'candidate_id');
+    }
 }

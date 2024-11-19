@@ -11,7 +11,7 @@ class UpdateStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'section_id' => ['required', 'exists:sections,id'],
         ];
     }
 }

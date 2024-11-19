@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CourseController;
@@ -31,4 +32,5 @@ Route::group([
     Route::resource('information', InformationController::class);
     Route::resource('candidates', CandidateController::class);
     Route::resource('students', StudentController::class);
+    Route::resource('admissions', AdmissionController::class);
 });

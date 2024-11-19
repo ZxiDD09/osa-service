@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\EnrollmentStatusEnum;
+use App\Enums\SemesterEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAdmissionRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class UpdateAdmissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,14 @@ class UpdateAdmissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'semester' => ['nullable', Rule::in(SemesterEnum::values())],
+            'candidate_id' => ['nullable', 'exists:candidates,id'],
+            'school_year_id' => ['nullable', 'exists:school_years,id'],
+            'course_id' => ['nullable', 'exists:courses,id'],
+            'section_id' => ['nullable', 'exists:sections,id'],
+            'is_new_student' => ['nullable', 'boolean'],
+            'enrollment_status' => ['nullable', Rule::in(EnrollmentStatusEnum::values())],
+            'gpa' => ['nullable', 'numeric'],
         ];
     }
 }

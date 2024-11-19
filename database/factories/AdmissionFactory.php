@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\EnrollmentStatusEnum;
+use App\Enums\SemesterEnum;
 use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +22,7 @@ class AdmissionFactory extends Factory
         $randomSection = Section::inRandomOrder()->first();
 
         return [
-            'semester' => $this->faker->randomElement(['1st', '2nd', '3rd', 'Summer']),
+            'semester' => $this->faker->randomElement(SemesterEnum::values()),
             'school_year_id' => $randomSection->school_year_id,
             'course_id' => $randomSection->course_id,
             'section_id' => $randomSection->id,

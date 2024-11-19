@@ -4,63 +4,72 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStaffRequest;
 use App\Http\Requests\UpdateStaffRequest;
+use App\Models\Information;
 use App\Models\Staff;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class StaffController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $builder = Staff::latest();
+
+        $builder->with('information', 'user');
+
+        $staffs = $builder->paginate($request->per_page ?? 20);
+
+        return JsonResource::collection($staffs);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreStaffRequest $request)
     {
-        //
+        $information = Information::findOrFail($request->information_id);
+
+        $password = Str::password();
+
+        $user = User::create([
+            'email' => $request->email,
+            'name' => $information->full_name,
+            'password' => bcrypt($password),
+        ]);
+
+        $staff = Staff::create([
+            ...$request->validated(),
+            'user_id' => $user->id,
+        ]);
+
+        $staff->load('information', 'user');
+
+        return JsonResource::make($staff)->additional([
+            'message' => 'Staff created successfully',
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Staff $staff)
     {
-        //
+        $staff->load('information', 'user');
+
+        return JsonResource::make($staff);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Staff $staff)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateStaffRequest $request, Staff $staff)
     {
-        //
+        $staff->update($request->validated());
+
+        $staff->load('information', 'user');
+
+        return JsonResource::make($staff)->additional([
+            'message' => 'Staff updated successfully',
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Staff $staff)
     {
-        //
+        $staff->delete();
+
+        return JsonResource::make($staff)->additional(['message' => 'Staff removed successfully']);
     }
 }

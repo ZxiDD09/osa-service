@@ -8,6 +8,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,5 @@ Route::group([
     Route::resource('candidates', CandidateController::class);
     Route::resource('students', StudentController::class);
     Route::resource('admissions', AdmissionController::class);
+    Route::resource('staffs', StaffController::class);
 });

@@ -50,11 +50,6 @@ class Candidate extends Model
         'has_desktop' => 'boolean',
     ];
 
-    public function admission()
-    {
-        return $this->hasMany(Admission::class, 'candidate_id', 'id');
-    }
-
     public function information()
     {
         return $this->belongsTo(Information::class, 'information_id', 'id');

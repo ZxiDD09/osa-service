@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InformationController;
@@ -28,5 +29,6 @@ Route::group([
     Route::resource('courses', CourseController::class);
     Route::resource('sections', SectionController::class);
     Route::resource('information', InformationController::class);
+    Route::resource('candidates', CandidateController::class);
     Route::resource('students', StudentController::class);
 });

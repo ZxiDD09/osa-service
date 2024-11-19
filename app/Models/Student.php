@@ -32,4 +32,9 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
 }

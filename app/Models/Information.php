@@ -56,6 +56,16 @@ class Information extends Model
         'reversed_name',
     ];
 
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'information_id', 'id');
+    }
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class, 'information_id', 'id');
+    }
+
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->middle_name} {$this->last_name} {$this->suffix}";

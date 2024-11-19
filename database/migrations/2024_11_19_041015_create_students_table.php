@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
 
+            $table->string('user_id')->unique();
+
+            $table->string('password_string');
+
             $table->string('student_id')->unique();
 
             $table->string('candidate_id')->unique();

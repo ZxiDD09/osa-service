@@ -59,4 +59,14 @@ class Candidate extends Model
     {
         return $this->belongsTo(Information::class, 'information_id', 'id');
     }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'candidate_id', 'id');
+    }
+
+    public function admissions()
+    {
+        return $this->hasMany(Admission::class, 'candidate_id', 'id');
+    }
 }

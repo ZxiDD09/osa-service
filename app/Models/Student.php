@@ -21,6 +21,7 @@ class Student extends Model
     ];
 
     protected $with = [
+        'section',
         'candidate.information',
     ];
 
@@ -41,5 +42,10 @@ class Student extends Model
     public function candidate()
     {
         return $this->hasOne(Candidate::class, 'id', 'candidate_id');
+    }
+
+    public function section()
+    {
+        return $this->hasOne(Section::class, 'id', 'section_id');
     }
 }

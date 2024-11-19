@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\UuidPrimaryKeyable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Laravel\Scout\Searchable;
 
 class Information extends Model
@@ -58,9 +59,23 @@ class Information extends Model
         'mother_full_name',
     ];
 
-    public function student()
+    #[SearchUsingPrefix([
+        'first_name',
+        'last_name',
+        'middle_name',
+    ])]
+    public function toSearchableArray()
     {
-        return $this->hasOne(Student::class, 'information_id', 'id');
+        return [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'middle_name' => $this->middle_name,
+        ];
+    }
+
+    public function candidate()
+    {
+        return $this->hasOne(Candidate::class, 'information_id', 'id');
     }
 
     public function staff()

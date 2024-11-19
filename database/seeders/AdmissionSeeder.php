@@ -18,6 +18,7 @@ class AdmissionSeeder extends Seeder
         $randomStudents->each(function ($student) {
             Admission::factory()->create([
                 'candidate_id' => $student->candidate_id,
+                'gpa' => fake()->randomFloat(2, 1, 4),
             ]);
         });
     }

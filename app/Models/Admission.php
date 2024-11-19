@@ -19,6 +19,7 @@ class Admission extends Model
         'section_id',
         'is_new_student',
         'enrollment_status',
+        'gpa',
     ];
 
     protected $casts = [

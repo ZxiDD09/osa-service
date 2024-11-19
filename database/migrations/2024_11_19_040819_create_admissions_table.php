@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->boolean('is_new_student')->default(true)->index();
 
+            $table->string('gpa')->nullable();
+
             $table->enum('enrollment_status', EnrollmentStatusEnum::values())->default(EnrollmentStatusEnum::New())->index();
 
             $table->timestamps();

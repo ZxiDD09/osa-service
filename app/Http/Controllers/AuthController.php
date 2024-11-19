@@ -12,7 +12,9 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (! auth()->attempt($credentials)) {
-            return abort(401, 'Unauthorized');
+            return response()->json([
+                'message' => 'Email or password is incorrect',
+            ], 401);
         }
 
         $user = auth()->user();

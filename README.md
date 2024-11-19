@@ -56,7 +56,6 @@ Follow these steps to set up the project locally:
     ```
 
 7. **Enjoy!**:
-   `bash
- php artisan serve
- `
-   `
+    ```bash
+    php artisan serve
+    ```

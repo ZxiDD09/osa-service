@@ -1,4 +1,4 @@
-# Financial Assistance Service v2
+# Office of Student Affairs
 
 This Laravel application is for the Office Of Student Affairs.
 
@@ -57,6 +57,6 @@ Follow these steps to set up the project locally:
 
 7. **Enjoy!**:
    `bash
-    php artisan serve
-    `
+ php artisan serve
+ `
    `

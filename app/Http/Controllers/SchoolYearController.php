@@ -3,64 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSchoolYearRequest;
-use App\Http\Requests\UpdateSchoolYearRequest;
 use App\Models\SchoolYear;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Request;
 
 class SchoolYearController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $schoolYears = SchoolYear::with(['departments.courses' => function ($query) {
+            $query->withCount('sections');
+        }])
+            ->latest()
+            ->paginate($request?->per_page ?? 20);
+
+        return JsonResource::collection($schoolYears);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreSchoolYearRequest $request)
     {
-        //
+        $schoolYear = SchoolYear::create($request->validated());
+
+        $schoolYear->load(['departments.courses' => function ($query) {
+            $query->withCount('sections');
+        }]);
+
+        return JsonResource::make($schoolYear)
+            ->additional([
+                'message' => 'School year created successfully',
+                'status' => 201,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(SchoolYear $schoolYear)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SchoolYear $schoolYear)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSchoolYearRequest $request, SchoolYear $schoolYear)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(SchoolYear $schoolYear)
     {
-        //
+        $schoolYear->delete();
+
+        return JsonResource::make($schoolYear)
+            ->additional([
+                'message' => 'School year deleted successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 }

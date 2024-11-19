@@ -12,4 +12,9 @@ class SchoolYear extends Model
     use HasFactory, Searchable, UuidPrimaryKeyable;
 
     protected $fillable = ['name'];
+
+    public function departments()
+    {
+        return $this->hasMany(Department::class, 'school_year_id', 'id');
+    }
 }

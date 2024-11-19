@@ -26,4 +26,9 @@ class Course extends Model
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id', 'id');
     }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'course_id', 'id');
+    }
 }

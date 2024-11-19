@@ -54,6 +54,8 @@ class Information extends Model
     protected $appends = [
         'full_name',
         'reversed_name',
+        'father_full_name',
+        'mother_full_name',
     ];
 
     public function student()
@@ -74,5 +76,15 @@ class Information extends Model
     public function getReversedNameAttribute()
     {
         return "{$this->last_name}, {$this->first_name} {$this->middle_name} {$this->suffix}";
+    }
+
+    public function getFatherFullNameAttribute()
+    {
+        return "{$this->father_first_name} {$this->father_middle_name} {$this->father_last_name} {$this->father_suffix}";
+    }
+
+    public function getMotherFullNameAttribute()
+    {
+        return "{$this->mother_first_name} {$this->mother_middle_name} {$this->mother_last_name} {$this->mother_suffix}";
     }
 }

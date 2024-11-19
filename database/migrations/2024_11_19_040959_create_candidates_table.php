@@ -44,7 +44,7 @@ return new class extends Migration
             $table->boolean('has_laptop')->index();
             $table->boolean('has_tablet')->index();
             $table->boolean('has_desktop')->index();
-            $table->text('other_gadgets')->index();
+            $table->text('other_gadgets');
 
             $table->enum('candidate_status', CandidateStatusEnum::values())->default(CandidateStatusEnum::APPLICANT())->index();
 

@@ -70,6 +70,8 @@ class StaffController extends Controller
     {
         $staff->delete();
 
+        $staff->user->delete();
+
         return JsonResource::make($staff)->additional(['message' => 'Staff removed successfully']);
     }
 }

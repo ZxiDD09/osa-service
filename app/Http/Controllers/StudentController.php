@@ -75,6 +75,8 @@ class StudentController extends Controller
 
     public function destroy(Student $student)
     {
+        $student->user->delete();
+
         $student->admissions()->delete();
 
         return JsonResource::make($student)->additional([

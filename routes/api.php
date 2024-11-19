@@ -10,6 +10,7 @@ use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -35,4 +36,5 @@ Route::group([
     Route::resource('students', StudentController::class);
     Route::resource('admissions', AdmissionController::class);
     Route::resource('staffs', StaffController::class);
+    Route::resource('users', UserController::class);
 });

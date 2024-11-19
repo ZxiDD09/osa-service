@@ -20,6 +20,10 @@ class Student extends Model
         'section_id',
     ];
 
+    protected $with = [
+        'candidate.information',
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -36,6 +40,6 @@ class Student extends Model
 
     public function candidate()
     {
-        return $this->belongsTo(Candidate::class);
+        return $this->hasOne(Candidate::class, 'id', 'candidate_id');
     }
 }

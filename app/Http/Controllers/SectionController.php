@@ -5,62 +5,98 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSectionRequest;
 use App\Http\Requests\UpdateSectionRequest;
 use App\Models\Section;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class SectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $builder = Section::latest();
+
+        if ($request->has('department_id')) {
+            $builder->whereDepartmentId($request->department_id);
+        }
+
+        if ($request->has('school_year_id')) {
+            $builder->whereSchoolYearId($request->school_year_id);
+        }
+
+        if ($request->has('course_id')) {
+            $builder->whereCourseId($request->course_id);
+        }
+
+        $builder->with([
+            'course',
+            'department',
+            'schoolYear',
+        ])
+            ->withCount('students');
+
+        $sections = $builder->paginate($request->per_page ?? 20);
+
+        return JsonResource::collection($sections);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreSectionRequest $request)
     {
-        //
+        $section = Section::create($request->validated());
+
+        $section->load([
+            'course',
+            'department',
+            'schoolYear',
+            'students',
+        ]);
+
+        return JsonResource::make($section)
+            ->additional([
+                'message' => 'Section created successfully',
+                'status' => 201,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Section $section)
     {
-        //
+        $section->load([
+            'course',
+            'department',
+            'schoolYear',
+            'students',
+        ]);
+
+        return JsonResource::make($section);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Section $section)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateSectionRequest $request, Section $section)
     {
-        //
+        $section->update($request->validated());
+
+        $section->load([
+            'course',
+            'department',
+            'schoolYear',
+            'students',
+        ]);
+
+        return JsonResource::make($section)
+            ->additional([
+                'message' => 'Section updated successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Section $section)
     {
-        //
+        $section->delete();
+
+        return JsonResource::make($section)
+            ->additional([
+                'message' => 'Section deleted successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 }

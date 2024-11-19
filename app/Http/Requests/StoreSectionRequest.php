@@ -11,7 +11,7 @@ class StoreSectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'course_id' => ['required', 'exists:courses,id'],
+            'department_id' => ['required', 'exists:departments,id'],
+            'school_year_id' => ['required', 'exists:school_years,id'],
         ];
     }
 }

@@ -11,7 +11,8 @@ class Section extends Model
 {
     use HasFactory, Searchable, UuidPrimaryKeyable;
 
-    protected $fillable = ['name',
+    protected $fillable = [
+        'name',
         'course_id',
         'department_id',
         'school_year_id',

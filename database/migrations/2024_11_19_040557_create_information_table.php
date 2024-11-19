@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\CivilStatusEnum;
+use App\Enums\SexEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,24 +26,26 @@ return new class extends Migration
             $table->string('province');
             $table->string('date_of_birth');
             $table->string('place_of_birth');
-            $table->string('sex');
-            $table->string('civil_status');
+
             $table->string('religion');
             $table->string('nationality');
             $table->string('phone');
+
+            $table->enum('sex', SexEnum::values());
+            $table->enum('civil_status', CivilStatusEnum::values());
 
             // for students nullable
             $table->string('father_last_name')->nullable();
             $table->string('father_first_name')->nullable();
             $table->string('father_middle_name')->nullable();
             $table->string('father_suffix')->nullable();
-            $table->string('father_occupation');
+            $table->string('father_occupation')->nullable();
 
             $table->string('mother_last_name')->nullable();
             $table->string('mother_first_name')->nullable();
             $table->string('mother_middle_name')->nullable();
             $table->string('mother_suffix')->nullable();
-            $table->string('mother_occupation');
+            $table->string('mother_occupation')->nullable();
 
             $table->string('guardian_full_name')->nullable();
             $table->string('guardian_address')->nullable();

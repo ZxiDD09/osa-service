@@ -20,4 +20,9 @@ class Department extends Model
     {
         return $this->hasMany(Course::class, 'department_id', 'id');
     }
+
+    public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'school_year_id', 'id');
+    }
 }

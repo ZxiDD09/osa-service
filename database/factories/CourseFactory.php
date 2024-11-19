@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,12 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $department = Department::inRandomOrder()->first();
+
         return [
-            //
+            'name' => $this->faker->jobTitle(),
+            'department_id' => $department->id,
+            'school_year_id' => $department->schoolYear->id,
         ];
     }
 }

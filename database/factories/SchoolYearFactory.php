@@ -17,7 +17,6 @@ class SchoolYearFactory extends Factory
     public function definition(): array
     {
         return [
-            //
         ];
     }
 }

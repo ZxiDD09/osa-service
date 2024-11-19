@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('admissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('semester');
-            $table->string('candidate_id')->unique();
-            $table->string('school_year_id');
-            $table->string('course_id');
-            $table->string('section_id');
+            $table->uuid('candidate_id');
+            $table->uuid('school_year_id');
+            $table->uuid('course_id');
+            $table->uuid('section_id');
 
             $table->boolean('is_new_student')->default(true);
 

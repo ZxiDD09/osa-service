@@ -46,4 +46,23 @@ class Information extends Model
         'guardian_address',
         'guardian_phone',
     ];
+
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
+
+    protected $appends = [
+        'full_name',
+        'reversed_name',
+    ];
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->middle_name} {$this->last_name} {$this->suffix}";
+    }
+
+    public function getReversedNameAttribute()
+    {
+        return "{$this->last_name}, {$this->first_name} {$this->middle_name} {$this->suffix}";
+    }
 }

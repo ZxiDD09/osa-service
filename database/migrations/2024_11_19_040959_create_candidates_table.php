@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('information_id');
+            $table->uuid('information_id');
 
             $table->enum('type_of_school_graduated_from', TypeOfSchoolGraduateFromEnum::values())->default(TypeOfSchoolGraduateFromEnum::PUBLIC());
 

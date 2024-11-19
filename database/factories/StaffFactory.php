@@ -17,7 +17,8 @@ class StaffFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->jobTitle,
+            'position' => $this->faker->jobTitle,
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\UuidPrimaryKeyable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 class Student extends Model
@@ -17,6 +18,15 @@ class Student extends Model
         'student_id',
         'candidate_id',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($student) {
+            $student->student_id = Str::uuid();
+        });
+    }
 
     public function user()
     {

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\SchoolYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class DepartmentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => explode(' ', $this->faker->jobTitle())[0],
+            'school_year_id' => SchoolYear::inRandomOrder()->first()->id,
         ];
     }
 }

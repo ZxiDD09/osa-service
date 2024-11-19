@@ -22,9 +22,4 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function setPasswordStringAttribute($value)
-    {
-        $this->attributes['password_string'] = bcrypt($value);
-    }
 }

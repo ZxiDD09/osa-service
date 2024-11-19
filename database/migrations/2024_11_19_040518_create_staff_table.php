@@ -15,8 +15,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('title');
             $table->string('position');
-            $table->uuid('information_id');
-            $table->uuid('user_id')->unique();
+            $table->uuid('information_id')->index();
+            $table->uuid('user_id')->unique()->index();
             $table->timestamps();
         });
     }

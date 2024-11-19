@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('course_id');
-            $table->uuid('department_id');
-            $table->uuid('school_year_id');
+            $table->uuid('course_id')->index();
+            $table->uuid('department_id')->index();
+            $table->uuid('school_year_id')->index();
             $table->string('name');
             $table->timestamps();
         });

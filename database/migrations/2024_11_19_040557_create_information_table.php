@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('nationality');
             $table->string('phone');
 
-            $table->enum('sex', SexEnum::values());
-            $table->enum('civil_status', CivilStatusEnum::values());
+            $table->enum('sex', SexEnum::values())->index();
+            $table->enum('civil_status', CivilStatusEnum::values())->index();
 
             // for students nullable
             $table->string('father_last_name')->nullable();

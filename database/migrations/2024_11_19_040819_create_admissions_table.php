@@ -14,15 +14,15 @@ return new class extends Migration
     {
         Schema::create('admissions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('semester');
-            $table->uuid('candidate_id');
-            $table->uuid('school_year_id');
-            $table->uuid('course_id');
-            $table->uuid('section_id');
+            $table->string('semester')->index();
+            $table->uuid('candidate_id')->index();
+            $table->uuid('school_year_id')->index();
+            $table->uuid('course_id')->index();
+            $table->uuid('section_id')->index();
 
-            $table->boolean('is_new_student')->default(true);
+            $table->boolean('is_new_student')->default(true)->index();
 
-            $table->enum('enrollment_status', EnrollmentStatusEnum::values())->default(EnrollmentStatusEnum::New());
+            $table->enum('enrollment_status', EnrollmentStatusEnum::values())->default(EnrollmentStatusEnum::New())->index();
 
             $table->timestamps();
         });

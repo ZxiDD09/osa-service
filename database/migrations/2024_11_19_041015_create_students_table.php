@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->uuid('user_id')->unique();
+            $table->uuid('user_id')->unique()->index();
 
             $table->string('password_string');
 
-            $table->uuid('student_id');
+            $table->uuid('student_id')->index();
 
-            $table->uuid('candidate_id');
+            $table->uuid('candidate_id')->index();
 
             $table->timestamps();
         });

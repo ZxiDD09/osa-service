@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SchoolYearController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,5 @@ Route::group([
     'middleware' => 'auth:api',
 ], function () {
     Route::resource('school-years', SchoolYearController::class);
+    Route::resource('departments', DepartmentController::class);
 });

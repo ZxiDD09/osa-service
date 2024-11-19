@@ -17,6 +17,7 @@ class Student extends Model
         'password_string',
         'student_id',
         'candidate_id',
+        'section_id',
     ];
 
     public static function boot()

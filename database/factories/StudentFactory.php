@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Section;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'section_id' => Section::inRandomOrder()->first()->id,
         ];
     }
 }

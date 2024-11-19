@@ -5,62 +5,86 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use App\Models\Department;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $builder = Department::latest();
+
+        if ($request->has('school_year_id')) {
+            $builder->whereSchoolYearId($request->school_year_id);
+        }
+
+        $builder->with([
+            'schoolYear',
+            'courses' => function ($query) {
+                $query->withCount('sections');
+            },
+
+        ]);
+
+        $departments = $builder->paginate($request->per_page ?? 20);
+
+        return JsonResource::collection($departments);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDepartmentRequest $request)
     {
-        //
+        $department = Department::create($request->validated());
+
+        $department->load([
+            'schoolYear',
+            'courses.sections' => function ($query) {
+                $query->withCount('students');
+            },
+        ]);
+
+        return new JsonResource($department);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Department $department)
     {
-        //
+        $department->load([
+            'schoolYear',
+            'courses.sections' => function ($query) {
+                $query->withCount('students');
+            },
+        ]);
+
+        return JsonResource::make($department);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Department $department)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        //
+        $department->update($request->validated());
+
+        $department->load([
+            'schoolYear',
+            'courses.sections' => function ($query) {
+                $query->withCount('students');
+            },
+        ]);
+
+        return JsonResource::make($department)
+            ->additional([
+                'message' => 'Department updated successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Department $department)
     {
-        //
+        $department->delete();
+
+        return JsonResource::make($department)
+            ->additional([
+                'message' => 'Department deleted successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 }

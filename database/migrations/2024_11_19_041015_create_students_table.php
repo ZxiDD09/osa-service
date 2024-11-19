@@ -22,6 +22,8 @@ return new class extends Migration
 
             $table->uuid('candidate_id')->index();
 
+            $table->uuid('section_id')->index();
+
             $table->timestamps();
         });
     }

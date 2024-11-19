@@ -5,62 +5,89 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $builder = Course::latest();
+
+        if ($request->has('department_id')) {
+            $builder->whereDepartmentId($request->department_id);
+        }
+
+        if ($request->has('school_year_id')) {
+            $builder->whereSchoolYearId($request->school_year_id);
+        }
+
+        $builder->with([
+            'department',
+            'sections' => function ($query) {
+                $query->withCount('students');
+            },
+
+        ]);
+
+        $courses = $builder->paginate($request->per_page ?? 20);
+
+        return JsonResource::collection($courses);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCourseRequest $request)
     {
-        //
+        $course = Course::create($request->validated());
+
+        $course->load([
+            'department',
+            'sections.students',
+        ]);
+
+        return JsonResource::make($course)
+            ->additional([
+                'message' => 'Course created successfully',
+                'status' => 201,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Course $course)
     {
-        //
+        $course->load([
+            'department',
+            'sections.students',
+        ]);
+
+        return JsonResource::make($course);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        //
+        $course->update($request->validated());
+
+        $course->load([
+            'department',
+            'sections.students',
+        ]);
+
+        return JsonResource::make($course)
+            ->additional([
+                'message' => 'Course updated successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return JsonResource::make($course)
+            ->additional([
+                'message' => 'Course deleted successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
     }
 }

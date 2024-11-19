@@ -36,6 +36,26 @@ class SchoolYearController extends Controller
             ]);
     }
 
+    public function update(StoreSchoolYearRequest $request, SchoolYear $schoolYear)
+    {
+        $schoolYear->update($request->validated());
+
+        if ($request->is_active) {
+            SchoolYear::where('id', '!=', $schoolYear->id)->update(['is_active' => false]);
+        }
+
+        $schoolYear->load(['departments.courses' => function ($query) {
+            $query->withCount('sections');
+        }]);
+
+        return JsonResource::make($schoolYear)
+            ->additional([
+                'message' => 'School year updated successfully',
+                'status' => 200,
+                'success' => true,
+            ]);
+    }
+
     public function destroy(SchoolYear $schoolYear)
     {
         $schoolYear->delete();

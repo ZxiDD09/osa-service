@@ -25,7 +25,7 @@ class AdmissionController extends Controller
             $builder->where('school_year_id', $request->school_year_id);
         }
 
-        $builder->with('candidate.information', 'schoolYear', 'course', 'section','candidate.student.user');
+        $builder->with('candidate.information', 'schoolYear', 'course', 'section.course', 'candidate.student.user');
 
         $admissions = $builder->paginate($request->per_page ?? 20);
 
@@ -60,7 +60,7 @@ class AdmissionController extends Controller
             $builder->where('enrollment_status', $request->enrollment_status);
         }
 
-        $builder->with('candidate.information', 'schoolYear', 'course', 'section');
+        $builder->with('candidate.information', 'schoolYear', 'course', 'section.course', 'candidate.student.user');
 
         $admissions = $builder->paginate($request->per_page ?? 20);
 

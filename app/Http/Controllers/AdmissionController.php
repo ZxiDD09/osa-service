@@ -72,11 +72,7 @@ class AdmissionController extends Controller
         $admission = Admission::firstOrCreate($request->validated());
 
         $admission->load(
-            'candidate.student.user',
-            'schoolYear',
-            'course',
-            'section.course',
-            'candidate.student.user',
+            'candidate.information', 'schoolYear', 'course', 'section.course', 'candidate.student.user'
         );
 
         return JsonResource::make($admission)->additional([
@@ -87,12 +83,7 @@ class AdmissionController extends Controller
     public function show(Admission $admission)
     {
         $admission->load(
-            'candidate.student.user',
-            'schoolYear',
-            'course',
-            'section.course',
-            'candidate.student.user',
-
+            'candidate.information', 'schoolYear', 'course', 'section.course', 'candidate.student.user'
         );
 
         return JsonResource::make($admission);

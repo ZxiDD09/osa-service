@@ -10,6 +10,28 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdmissionController extends Controller
 {
+    public function admissionList(Request $request)
+    {
+        $builder = Admission::latest()
+            ->whereHas('candidate', function ($query) {
+                $query->whereHas('student', function ($query) {
+                    $query->whereHas('user', function ($query) {
+                        $query->where('id', auth()->id());
+                    });
+                });
+            });
+
+        if ($request->has('school_year_id')) {
+            $builder->where('school_year_id', $request->school_year_id);
+        }
+
+        $builder->with('candidate.information', 'schoolYear', 'course', 'section','candidate.student.user');
+
+        $admissions = $builder->paginate($request->per_page ?? 20);
+
+        return JsonResource::collection($admissions);
+    }
+
     public function index(Request $request)
     {
         $builder = Admission::latest();

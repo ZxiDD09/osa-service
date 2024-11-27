@@ -23,6 +23,17 @@ Route::group([
 });
 
 Route::group([
+    'prefix' => 'students',
+    'middleware' => 'auth:api',
+], function () {
+    Route::post('information', [AdmissionController::class, 'store']);
+    Route::post('candidate', [AdmissionController::class, 'store']);
+    Route::post('admissions', [AdmissionController::class, 'store']);
+
+    Route::get('admissions', [AdmissionController::class, 'admissionList']);
+});
+
+Route::group([
     'middleware' => 'auth:api',
 ], function () {
     Route::get('information/search', [InformationController::class, 'search']);

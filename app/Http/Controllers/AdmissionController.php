@@ -75,6 +75,8 @@ class AdmissionController extends Controller
             'candidate.student.user',
             'schoolYear',
             'course',
+            'section.course',
+            'candidate.student.user',
         );
 
         return JsonResource::make($admission)->additional([
@@ -88,6 +90,9 @@ class AdmissionController extends Controller
             'candidate.student.user',
             'schoolYear',
             'course',
+            'section.course',
+            'candidate.student.user',
+
         );
 
         return JsonResource::make($admission);

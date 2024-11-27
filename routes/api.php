@@ -29,7 +29,7 @@ Route::group([
     Route::post('information', [AdmissionController::class, 'store']);
     Route::post('candidate', [AdmissionController::class, 'store']);
     Route::post('admissions', [AdmissionController::class, 'store']);
-
+    Route::put('admissions/{admission}', [AdmissionController::class, 'update']);
     Route::get('admissions', [AdmissionController::class, 'admissionList']);
 });
 

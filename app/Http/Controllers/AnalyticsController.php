@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AdmissionVsCandidatesService;
 use App\Services\AnnualIncomesService;
 use App\Services\CandidateGadgetService;
 use App\Services\CandidateGroupService;
@@ -22,6 +23,7 @@ class AnalyticsController extends Controller
         private readonly CandidateGadgetService $candidateGadgetService,
         private readonly SourcesOfIncomeService $sourcesOfIncomeService,
         private readonly HighSchoolStrandsService $highSchoolStrandsService,
+        private readonly AdmissionVsCandidatesService $admissionVsCandidatesService,
         private readonly TuitionFinancialSourcesService $tuitionFinancialSourcesService
     ) {}
 
@@ -60,7 +62,13 @@ class AnalyticsController extends Controller
         return $this->candidateGroupService->getCandidateGroups($request);
     }
 
-    public function sourcesOfIncomes(Request $request){
+    public function sourcesOfIncomes(Request $request)
+    {
         return $this->sourcesOfIncomeService->getSourcesOfIncomes($request);
+    }
+
+    public function admissionVsCandidates(Request $request)
+    {
+        return $this->admissionVsCandidatesService->getAdmissionVsCandidates($request);
     }
 }

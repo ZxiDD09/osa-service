@@ -10,7 +10,7 @@ class SourcesOfIncomeService
 {
     public function getSourcesOfIncomes(Request $request)
     {
-         $builder = Admission::latest();
+        $builder = Admission::latest();
 
         if ($request->has('school_year_id')) {
             $builder->where('school_year_id', $request->school_year_id);

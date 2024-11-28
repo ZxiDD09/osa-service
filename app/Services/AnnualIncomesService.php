@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,5 +27,15 @@ class AnnualIncomesService
         })->sortByDesc('y');
 
         return JsonResource::make($incomes);
+    }
+
+    public function summary(Collection $admissions)
+    {
+        return $admissions->groupBy('candidate.annual_income_amount')->map(function ($admissions) {
+            return [
+                'x' => $admissions->first()->candidate->annual_income_amount,
+                'y' => $admissions->count(),
+            ];
+        })->sortByDesc('y')->values()->toArray();
     }
 }

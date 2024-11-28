@@ -60,5 +60,6 @@ Route::group([
         Route::get('candidate-groups', [AnalyticsController::class, 'candidateGroups']);
         Route::get('sources-of-incomes', [AnalyticsController::class, 'sourcesOfIncomes']);
         Route::get('admission-vs-candidates', [AnalyticsController::class, 'admissionVsCandidates']);
+        Route::get('summary', [AnalyticsController::class, 'summary']);
     });
 });

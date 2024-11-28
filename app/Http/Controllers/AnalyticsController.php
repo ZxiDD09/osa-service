@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admission;
 use App\Services\AdmissionVsCandidatesService;
 use App\Services\AnnualIncomesService;
 use App\Services\CandidateGadgetService;
@@ -12,6 +13,7 @@ use App\Services\PassedVsFailedService;
 use App\Services\SourcesOfIncomeService;
 use App\Services\TuitionFinancialSourcesService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AnalyticsController extends Controller
 {
@@ -26,6 +28,29 @@ class AnalyticsController extends Controller
         private readonly AdmissionVsCandidatesService $admissionVsCandidatesService,
         private readonly TuitionFinancialSourcesService $tuitionFinancialSourcesService
     ) {}
+
+    public function summary(Request $request)
+    {
+        $builder = Admission::latest();
+
+        if ($request->has('school_year_id')) {
+            $builder->where('school_year_id', $request->school_year_id);
+        }
+
+        $admissions = $builder->with('candidate')->get();
+
+        return JsonResource::make([
+            'courses_overview' => $this->coursesOverviewService->summary($admissions),
+            'annual_incomes' => $this->annualIncomesService->summary($admissions),
+            'passed_vs_failed' => $this->passedVsFailedService->summary($admissions),
+            'tuition_financial_sources' => $this->tuitionFinancialSourcesService->summary($admissions),
+            'highschool_strands' => $this->highSchoolStrandsService->summary($admissions),
+            'candidate_gadgets' => $this->candidateGadgetService->summary($admissions),
+            'candidate_groups' => $this->candidateGroupService->summary($admissions),
+            'sources_of_incomes' => $this->sourcesOfIncomeService->summary($admissions),
+            'admission_vs_candidates' => $this->admissionVsCandidatesService->summary($request, $admissions),
+        ]);
+    }
 
     public function coursesOverview(Request $request)
     {

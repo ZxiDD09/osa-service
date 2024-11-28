@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,5 +29,19 @@ class HighSchoolStrandsService
             ->toArray();
 
         return JsonResource::make($strands);
+    }
+
+    public function summary(Collection $admissions)
+    {
+        $strands = $admissions->groupBy('candidate.senior_highschool_strand')->map(function ($admissions) {
+            return [
+                'x' => $admissions->first()->candidate->senior_highschool_strand,
+                'y' => $admissions->count(),
+            ];
+        })->sortByDesc('y')
+            ->values()
+            ->toArray();
+
+        return $strands;
     }
 }

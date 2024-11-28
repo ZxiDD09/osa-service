@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,5 +27,15 @@ class PassedVsFailedService
         })->sortByDesc('y');
 
         return JsonResource::make($passedVsFailed);
+    }
+
+    public function summary(Collection $admissions)
+    {
+        return $admissions->groupBy('candidate.is_passed')->map(function ($admissions) {
+            return [
+                'x' => $admissions->first()->candidate->is_passed ? 'Passed' : 'Failed',
+                'y' => $admissions->count(),
+            ];
+        })->sortByDesc('y')->values()->toArray();
     }
 }

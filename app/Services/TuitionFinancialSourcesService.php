@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -42,5 +43,33 @@ class TuitionFinancialSourcesService
         });
 
         return JsonResource::make($financialSources);
+    }
+
+    public function summary(Collection $admissions)
+    {
+        $sources = [
+            'source_is_uni_fast',
+            'source_is_other_scholarships',
+            'source_is_self_financed',
+            'source_is_parent',
+        ];
+
+        $financialSources = collect($sources)->map(function ($source) use ($admissions) {
+            return [
+                'x' => $source,
+                'y' => $admissions->filter(function ($admission) use ($source) {
+                    return $admission->candidate->{$source};
+                })->count(),
+            ];
+        })->sortByDesc('y');
+
+        collect($sources)->each(function ($source) use (&$financialSources) {
+            $financialSources->push([
+                'x' => $source,
+                'y' => 0,
+            ]);
+        });
+
+        return $financialSources->values()->toArray();
     }
 }

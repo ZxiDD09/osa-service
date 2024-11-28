@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Admission;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,5 +27,16 @@ class CoursesOverviewService
         })->values()->toArray();
 
         return JsonResource::make($courses);
+    }
+
+    public function summary(Collection $admissions)
+    {
+        return $admissions->groupBy('course_id')->map(function ($admissions) {
+            return [
+                'x' => $admissions->first()->course->name,
+                'y' => $admissions->count(),
+            ];
+        })->values()->toArray();
+
     }
 }

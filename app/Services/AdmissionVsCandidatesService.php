@@ -39,8 +39,8 @@ class AdmissionVsCandidatesService
 
         $thirtyDaysCandidates = $dates->map(function ($count, $date) use ($groupedCandidates) {
             return [
-                'y' => $date,
-                'x' => $groupedCandidates->get($date)?->count() ?? 0,
+                'x' => $date,
+                'y' => $groupedCandidates->get($date)?->count() ?? 0,
             ];
         })->sortBy(
             function ($data) {
@@ -62,8 +62,8 @@ class AdmissionVsCandidatesService
 
         $thirtyDaysAdmissions = $dates->map(function ($count, $date) use ($groupedAdmissions) {
             return [
-                'y' => $date,
-                'x' => $groupedAdmissions->get($date)?->count() ?? 0,
+                'x' => $date,
+                'y' => $groupedAdmissions->get($date)?->count() ?? 0,
             ];
         })->sortBy(
             function ($data) {
@@ -106,8 +106,8 @@ class AdmissionVsCandidatesService
 
         $thirtyDaysCandidates = $dates->map(function ($count, $date) use ($groupedCandidates) {
             return [
-                'y' => $date,
-                'x' => $groupedCandidates->get($date)?->count() ?? 0,
+                'x' => $date,
+                'y' => $groupedCandidates->get($date)?->count() ?? 0,
             ];
         })->sortBy(
             function ($data) {
@@ -121,8 +121,8 @@ class AdmissionVsCandidatesService
 
         $thirtyDaysAdmissions = $dates->map(function ($count, $date) use ($groupedAdmissions) {
             return [
-                'y' => $date,
-                'x' => $groupedAdmissions->get($date)?->count() ?? 0,
+                'x' => $date,
+                'y' => $groupedAdmissions->get($date)?->count() ?? 0,
             ];
         })->sortBy(
             function ($data) {

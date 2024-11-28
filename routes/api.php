@@ -56,5 +56,6 @@ Route::group([
         Route::get('passed-vs-failed', [AnalyticsController::class, 'passedVsFailed']);
         Route::get('tuition-financial-sources', [AnalyticsController::class, 'tuitionFinancialSources']);
         Route::get('highschool-strands', [AnalyticsController::class, 'highschoolStrands']);
+        Route::get('candidate-gadgets', [AnalyticsController::class, 'candidateGadgets']);
     });
 });

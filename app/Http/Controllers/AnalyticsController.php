@@ -40,7 +40,7 @@ class AnalyticsController extends Controller
 
         $admissions = $builder->with('candidate')->get();
 
-        return JsonResource::make([
+        return JsonResource::collection([[
             'id' => Str::uuid(),
             'courses_overview' => $this->coursesOverviewService->summary($admissions),
             'annual_incomes' => $this->annualIncomesService->summary($admissions),
@@ -53,7 +53,7 @@ class AnalyticsController extends Controller
             'admission_vs_candidates' => $this->admissionVsCandidatesService->summary($request, $admissions),
             'created_at' => now(),
             'updated_at' => now(),
-        ]);
+        ]]);
     }
 
     public function coursesOverview(Request $request)

@@ -24,8 +24,8 @@ class StoreStaffRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'position' => ['required', 'string'],
-            'information_id' => ['required', 'string', 'exists:information,id'],
             'email' => ['required', 'email', 'unique:users,email'],
+            'name' => ['required', 'string'],
         ];
     }
 }

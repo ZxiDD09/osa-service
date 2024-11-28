@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreStaffRequest;
 use App\Http\Requests\UpdateStaffRequest;
-use App\Models\Information;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,13 +25,12 @@ class StaffController extends Controller
 
     public function store(StoreStaffRequest $request)
     {
-        $information = Information::findOrFail($request->information_id);
 
         $password = Str::password();
 
         $user = User::create([
             'email' => $request->email,
-            'name' => $information->full_name,
+            'name' => $request->name,
             'password' => bcrypt($password),
         ]);
 
@@ -41,7 +39,7 @@ class StaffController extends Controller
             'user_id' => $user->id,
         ]);
 
-        $staff->load('information', 'user');
+        $staff->load('user');
 
         return JsonResource::make($staff)->additional([
             'message' => 'Staff created successfully',

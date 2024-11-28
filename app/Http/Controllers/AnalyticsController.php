@@ -8,6 +8,7 @@ use App\Services\CandidateGroupService;
 use App\Services\CoursesOverviewService;
 use App\Services\HighSchoolStrandsService;
 use App\Services\PassedVsFailedService;
+use App\Services\SourcesOfIncomeService;
 use App\Services\TuitionFinancialSourcesService;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class AnalyticsController extends Controller
         private readonly CandidateGroupService $candidateGroupService,
         private readonly CoursesOverviewService $coursesOverviewService,
         private readonly CandidateGadgetService $candidateGadgetService,
+        private readonly SourcesOfIncomeService $sourcesOfIncomeService,
         private readonly HighSchoolStrandsService $highSchoolStrandsService,
         private readonly TuitionFinancialSourcesService $tuitionFinancialSourcesService
     ) {}
@@ -56,5 +58,9 @@ class AnalyticsController extends Controller
     public function candidateGroups(Request $request)
     {
         return $this->candidateGroupService->getCandidateGroups($request);
+    }
+
+    public function sourcesOfIncomes(Request $request){
+        return $this->sourcesOfIncomeService->getSourcesOfIncomes($request);
     }
 }

@@ -14,6 +14,7 @@ use App\Services\SourcesOfIncomeService;
 use App\Services\TuitionFinancialSourcesService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class AnalyticsController extends Controller
 {
@@ -40,6 +41,7 @@ class AnalyticsController extends Controller
         $admissions = $builder->with('candidate')->get();
 
         return JsonResource::make([
+            'id' => Str::uuid(),
             'courses_overview' => $this->coursesOverviewService->summary($admissions),
             'annual_incomes' => $this->annualIncomesService->summary($admissions),
             'passed_vs_failed' => $this->passedVsFailedService->summary($admissions),
@@ -49,6 +51,8 @@ class AnalyticsController extends Controller
             'candidate_groups' => $this->candidateGroupService->summary($admissions),
             'sources_of_incomes' => $this->sourcesOfIncomeService->summary($admissions),
             'admission_vs_candidates' => $this->admissionVsCandidatesService->summary($request, $admissions),
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 

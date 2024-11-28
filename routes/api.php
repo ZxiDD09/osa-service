@@ -53,5 +53,6 @@ Route::group([
     Route::group(['prefix' => 'analytics'], function () {
         Route::get('courses-overview', [AnalyticsController::class, 'coursesOverview']);
         Route::get('annual-incomes', [AnalyticsController::class, 'annualIncomes']);
+        Route::get('passed-vs-failed', [AnalyticsController::class, 'passedVsFailed']);
     });
 });

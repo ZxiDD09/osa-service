@@ -16,7 +16,7 @@ class StaffController extends Controller
     {
         $builder = Staff::latest();
 
-        $builder->with('information', 'user');
+        $builder->with('user');
 
         $staffs = $builder->paginate($request->per_page ?? 20);
 

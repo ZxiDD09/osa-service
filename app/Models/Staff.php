@@ -14,14 +14,8 @@ class Staff extends Model
     protected $fillable = [
         'title',
         'position',
-        'information_id',
         'user_id',
     ];
-
-    public function information()
-    {
-        return $this->belongsTo(Information::class);
-    }
 
     public function user()
     {

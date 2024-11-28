@@ -13,7 +13,7 @@ class UserController extends Controller
         $builder = User::latest();
 
         if ($request->staff) {
-            $builder->has('staff')->with('staff.information');
+            $builder->has('staff')->with('staff.user');
         }
 
         if ($request->student) {

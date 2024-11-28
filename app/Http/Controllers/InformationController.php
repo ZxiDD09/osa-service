@@ -15,7 +15,7 @@ class InformationController extends Controller
         $builder = Information::latest();
 
         if ($request->staff) {
-            $builder->has('staff')->with('staff.information');
+            $builder->has('staff')->with('staff.user');
         }
 
         if ($request->student) {
@@ -35,7 +35,7 @@ class InformationController extends Controller
 
         if ($request->staff) {
             $information->transform(function ($info) {
-                $info->load('staff.information');
+                $info->load('staff.user');
 
                 return $info;
             });
@@ -64,7 +64,7 @@ class InformationController extends Controller
     {
         $information = Information::create($request->validated());
 
-        $information->load(['staff.information', 'candidate.student']);
+        $information->load(['staff.user', 'candidate.student']);
 
         return JSONResource::make($information)->additional([
             'message' => 'Information created successfully',
@@ -74,7 +74,7 @@ class InformationController extends Controller
     public function show(Information $information)
     {
         $information->load([
-            'staff.information',
+            'staff.user',
             'candidate.student.section',
             'candidate.admissions',
         ]);
@@ -87,7 +87,7 @@ class InformationController extends Controller
         $information->update($request->validated());
 
         $information->load([
-            'staff.information',
+            'staff.user',
             'candidate.student.section',
             'candidate.admissions',
         ]);

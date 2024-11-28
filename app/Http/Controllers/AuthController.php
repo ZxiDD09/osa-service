@@ -20,7 +20,7 @@ class AuthController extends Controller
         $user = auth()->user();
 
         $user->load([
-            'staff.information',
+            'staff.user',
             'student.candidate.information',
         ]);
 
@@ -37,7 +37,7 @@ class AuthController extends Controller
         $user = auth()->user();
 
         $user->load([
-            'staff.information',
+            'staff.user',
             'student.candidate.information',
         ]);
 

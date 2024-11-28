@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CourseController;
@@ -48,4 +49,9 @@ Route::group([
     Route::resource('admissions', AdmissionController::class);
     Route::resource('staffs', StaffController::class);
     Route::resource('users', UserController::class);
+
+    Route::group(['prefix' => 'analytics'], function () {
+        Route::get('courses-overview', [AnalyticsController::class, 'coursesOverview']);
+        Route::get('annual-incomes', [AnalyticsController::class, 'annualIncomes']);
+    });
 });

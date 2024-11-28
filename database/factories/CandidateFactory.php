@@ -50,6 +50,8 @@ class CandidateFactory extends Factory
             'other_gadgets' => $this->faker->sentence(),
 
             'candidate_status' => $this->faker->randomElement(CandidateStatusEnum::values()),
+
+            'is_passed' => $this->faker->boolean(),
         ];
     }
 }

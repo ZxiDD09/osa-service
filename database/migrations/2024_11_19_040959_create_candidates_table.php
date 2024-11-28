@@ -46,6 +46,8 @@ return new class extends Migration
             $table->boolean('has_desktop')->index();
             $table->text('other_gadgets');
 
+            $table->boolean('is_passed')->default(false)->index();
+
             $table->enum('candidate_status', CandidateStatusEnum::values())->default(CandidateStatusEnum::APPLICANT())->index();
 
             $table->timestamps();

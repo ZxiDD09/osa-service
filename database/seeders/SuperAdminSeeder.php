@@ -43,7 +43,6 @@ class SuperAdminSeeder extends Seeder
         Staff::factory()->create([
             'title' => 'Super Admin',
             'position' => 'OSA Director',
-            'information_id' => $information->id,
             'user_id' => $user->id,
         ]);
 

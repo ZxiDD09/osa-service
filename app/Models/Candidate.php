@@ -32,6 +32,7 @@ class Candidate extends Model
         'has_desktop',
         'other_gadgets',
         'candidate_status',
+        'is_passed',
     ];
 
     protected $casts = [
@@ -48,6 +49,7 @@ class Candidate extends Model
         'has_laptop' => 'boolean',
         'has_tablet' => 'boolean',
         'has_desktop' => 'boolean',
+        'is_passed' => 'boolean',
     ];
 
     public function information()

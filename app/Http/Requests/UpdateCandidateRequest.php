@@ -44,6 +44,7 @@ class UpdateCandidateRequest extends FormRequest
             'has_desktop' => ['nullable', 'boolean'],
             'other_gadgets' => ['nullable', 'string'],
             'candidate_status' => ['nullable', Rule::in(CandidateStatusEnum::values())],
+            'is_passed' => ['nullable', 'boolean'],
         ];
     }
 }

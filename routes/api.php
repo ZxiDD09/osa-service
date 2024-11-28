@@ -57,5 +57,6 @@ Route::group([
         Route::get('tuition-financial-sources', [AnalyticsController::class, 'tuitionFinancialSources']);
         Route::get('highschool-strands', [AnalyticsController::class, 'highschoolStrands']);
         Route::get('candidate-gadgets', [AnalyticsController::class, 'candidateGadgets']);
+        Route::get('candidate-groups', [AnalyticsController::class, 'candidateGroups']);
     });
 });

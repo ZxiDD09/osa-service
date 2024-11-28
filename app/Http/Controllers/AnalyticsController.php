@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AnnualIncomesService;
 use App\Services\CandidateGadgetService;
+use App\Services\CandidateGroupService;
 use App\Services\CoursesOverviewService;
 use App\Services\HighSchoolStrandsService;
 use App\Services\PassedVsFailedService;
@@ -15,6 +16,7 @@ class AnalyticsController extends Controller
     public function __construct(
         private readonly AnnualIncomesService $annualIncomesService,
         private readonly PassedVsFailedService $passedVsFailedService,
+        private readonly CandidateGroupService $candidateGroupService,
         private readonly CoursesOverviewService $coursesOverviewService,
         private readonly CandidateGadgetService $candidateGadgetService,
         private readonly HighSchoolStrandsService $highSchoolStrandsService,
@@ -49,5 +51,10 @@ class AnalyticsController extends Controller
     public function candidateGadgets(Request $request)
     {
         return $this->candidateGadgetService->getCandidateGadgets($request);
+    }
+
+    public function candidateGroups(Request $request)
+    {
+        return $this->candidateGroupService->getCandidateGroups($request);
     }
 }

@@ -57,7 +57,7 @@ class StaffController extends Controller
     {
         $staff->update($request->validated());
 
-        $staff->load('information', 'user');
+        $staff->load('user');
 
         return JsonResource::make($staff)->additional([
             'message' => 'Staff updated successfully',

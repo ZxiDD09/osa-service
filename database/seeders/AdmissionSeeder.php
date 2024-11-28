@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admission;
 use App\Models\Student;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class AdmissionSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class AdmissionSeeder extends Seeder
             Admission::factory()->create([
                 'candidate_id' => $student->candidate_id,
                 'gpa' => fake()->randomFloat(2, 1, 4),
+                'created_at' => Carbon::now()->subDays(rand(0, 30)),
             ]);
         });
     }

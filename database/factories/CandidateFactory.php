@@ -8,6 +8,7 @@ use App\Enums\SourceOfFamilyIncomeEnum;
 use App\Enums\TypeOfSchoolGraduateFromEnum;
 use App\Models\Information;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Candidate>
@@ -61,6 +62,8 @@ class CandidateFactory extends Factory
             'candidate_status' => $this->faker->randomElement(CandidateStatusEnum::values()),
 
             'is_passed' => $this->faker->boolean(),
+            'created_at' => Carbon::now()->subDays(rand(0, 30)),
+
         ];
     }
 }

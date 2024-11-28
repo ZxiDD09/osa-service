@@ -23,6 +23,15 @@ class CandidateFactory extends Factory
     {
         $information = Information::factory()->create();
 
+        $annualIncomes = [
+            '₱31,485 - ₱262,968',
+            '₱262,969 - ₱524,936',
+            '₱524,937 - ₱920,358',
+            '₱920,359 - ₱1,577,808',
+            '₱1,577,809 - ₱2,629,680',
+            '₱2,629,681++',
+        ];
+
         return [
             'information_id' => $information->id,
             'type_of_school_graduated_from' => $this->faker->randomElement(TypeOfSchoolGraduateFromEnum::values()),
@@ -36,7 +45,7 @@ class CandidateFactory extends Factory
             'is_person_with_disability_group' => $this->faker->boolean(),
             'is_solo_parent_group' => $this->faker->boolean(),
             'is_person_with_special_needs_group' => $this->faker->boolean(),
-            'annual_income_amount' => $this->faker->randomFloat(2, 0, 1000000),
+            'annual_income_amount' => $this->faker->randomElement($annualIncomes),
 
             'source_is_uni_fast' => $this->faker->boolean(),
             'source_is_other_scholarships' => $this->faker->boolean(),

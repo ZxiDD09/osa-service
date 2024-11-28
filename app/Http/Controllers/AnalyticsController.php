@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AnnualIncomesService;
 use App\Services\CoursesOverviewService;
+use App\Services\HighSchoolStrandsService;
 use App\Services\PassedVsFailedService;
 use App\Services\TuitionFinancialSourcesService;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class AnalyticsController extends Controller
         private readonly AnnualIncomesService $annualIncomesService,
         private readonly PassedVsFailedService $passedVsFailedService,
         private readonly CoursesOverviewService $coursesOverviewService,
+        private readonly HighSchoolStrandsService $highSchoolStrandsService,
         private readonly TuitionFinancialSourcesService $tuitionFinancialSourcesService
     ) {}
 
@@ -35,5 +37,10 @@ class AnalyticsController extends Controller
     public function tuitionFinancialSources(Request $request)
     {
         return $this->tuitionFinancialSourcesService->getFinancialSources($request);
+    }
+
+    public function highschoolStrands(Request $request)
+    {
+        return $this->highSchoolStrandsService->getStrands($request);
     }
 }

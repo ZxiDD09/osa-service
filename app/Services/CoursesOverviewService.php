@@ -23,7 +23,7 @@ class CoursesOverviewService
                 'x' => $admissions->first()->course->name,
                 'y' => $admissions->count(),
             ];
-        });
+        })->values()->toArray();
 
         return JsonResource::make($courses);
     }

@@ -94,9 +94,7 @@ class AdmissionController extends Controller
         $admission->update($request->validated());
 
         $admission->load(
-            'candidate.student.user',
-            'schoolYear',
-            'course',
+            'candidate.information', 'schoolYear', 'course', 'section.course', 'candidate.student.user'
         );
 
         return JsonResource::make($admission)->additional([

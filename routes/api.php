@@ -27,8 +27,10 @@ Route::group([
     'prefix' => 'students',
     'middleware' => 'auth:api',
 ], function () {
+    Route::put('information/{information}', [InformationController::class, 'update'])->withoutMiddleware('auth:api');
     Route::post('information', [InformationController::class, 'store'])->withoutMiddleware('auth:api');
     Route::post('candidates', [CandidateController::class, 'store'])->withoutMiddleware('auth:api');
+    Route::put('candidates/{candidate}', [CandidateController::class, 'update'])->withoutMiddleware('auth:api');
     Route::post('admissions', [AdmissionController::class, 'store']);
     Route::put('admissions/{admission}', [AdmissionController::class, 'update']);
     Route::get('admissions', [AdmissionController::class, 'admissionList']);

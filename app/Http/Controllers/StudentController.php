@@ -22,7 +22,7 @@ class StudentController extends Controller
         }
 
         $builder->withCount('admissions')
-            ->with(['section', 'candidate.information', 'user']);
+            ->with(['section.course.department', 'candidate.information', 'user']);
 
         $students = $builder->paginate($request->per_page ?? 20);
 
@@ -48,7 +48,7 @@ class StudentController extends Controller
             ...$request->validated(),
         ]);
 
-        $student->load(['section', 'candidate.information', 'user', 'admissions']);
+        $student->load(['section.course.department', 'candidate.information', 'user', 'admissions']);
 
         return JsonResource::make($student)->additional([
             'message' => 'Student created successfully',
@@ -57,7 +57,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        $student->load(['section', 'candidate.information', 'user', 'admissions']);
+        $student->load(['section.course.department', 'candidate.information', 'user', 'admissions']);
 
         return JsonResource::make($student);
     }

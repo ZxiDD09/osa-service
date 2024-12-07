@@ -25,6 +25,10 @@ class Student extends Model
         'candidate.information',
     ];
 
+    protected $appends = [
+        'average_grade',
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -32,6 +36,11 @@ class Student extends Model
         static::creating(function ($student) {
             $student->student_id = Str::uuid();
         });
+    }
+
+    public function getAverageGradeAttribute()
+    {
+        return $this->admissions->avg('gpa') ?? 0;
     }
 
     public function user()

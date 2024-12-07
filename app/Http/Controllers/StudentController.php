@@ -66,7 +66,7 @@ class StudentController extends Controller
     {
         $student->update($request->validated());
 
-        $student->load(['section', 'candidate.information', 'user', 'admissions']);
+        $student->load(['section.course.department', 'candidate.information', 'user', 'admissions']);
 
         return JsonResource::make($student)->additional([
             'message' => 'Student updated successfully',

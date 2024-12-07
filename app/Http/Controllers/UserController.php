@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $builder = User::latest();
+        $builder = User::latest()->with('student', 'staff');
 
         if ($request->staff) {
             $builder->has('staff')->with('staff.user');

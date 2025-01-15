@@ -59,3 +59,4 @@ Follow these steps to set up the project locally:
     ```bash
     php artisan serve
     ```
+# osa-service
